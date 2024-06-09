@@ -1,5 +1,5 @@
 import './style/studentProfile.scss';
-import List from '../../components/table/Table';
+//import List from '../../components/table/Table';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import QrCode from '../../components/qrCode/QrCode';

@@ -2,7 +2,7 @@ import './style/supervisorProfile.scss';
 import Sidebar from './../../components/sidebar/Sidebar';
 import Navbar from './../../components/navbar/Navbar';
 import Chart from './../../components/chart/Chart';
-import List from '../../components/table/Table';
+//import List from '../../components/table/Table';
 import ViewSupervisorProfileHook from '../../hook/supervisor/view-supervisor-profile-hook';
 import Loader from '../../components/Loader/Loader';
 import { Link } from 'react-router-dom';
