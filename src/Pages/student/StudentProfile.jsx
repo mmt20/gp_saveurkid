@@ -3,27 +3,14 @@ import './style/studentProfile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import QrCode from '../../components/qrCode/QrCode';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getOneStudentWithParent } from '../../redux/action/studentAction';
+
 import Loader from '../../components/Loader/Loader';
 import { Link } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-const StudentProfile = () => {
-  const url = window.location.href;
-  const segments = url.split('/');
-  const driversIndex = segments.findIndex((segment) => segment === 'students');
-  const id = segments[driversIndex + 1];
+import ViewStudentProfileHook from '../../hook/student/view-student-profile-hook.js';
 
-  // REDUX
-  const dispatch = useDispatch();
-  const student = useSelector((state) => state.allStudents.oneStudent);
-  const loading = useSelector((state) => state.allStudents.loading);
-  console.log(student);
-  useEffect(() => {
-    dispatch(getOneStudentWithParent(id));
-  }, [dispatch, id]);
-  console.log(student);
+const StudentProfile = () => {
+  const [student, loading] = ViewStudentProfileHook();
   return (
     <div className="student">
       <Sidebar />

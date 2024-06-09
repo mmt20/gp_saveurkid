@@ -114,7 +114,7 @@ export const deleteStudent = (id) => async (dispatch) => {
 // Get one Student with parent
 export const getOneStudentWithParent = (id) => async (dispatch) => {
   try {
-    const studentResponse = await useGetData(`/api/student/show/${id}`);
+    const studentResponse = await useGetData(`/api/Student/Show/${id}`);
     const student = studentResponse.data;
 
     const parentResponse = await useGetData(
