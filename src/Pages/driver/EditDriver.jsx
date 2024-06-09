@@ -8,9 +8,15 @@ import EditDriverHook from '../../hook/driver/edit-driver-hook';
 const EditDriver = () => {
   const currentURL = window.location.href;
   const id = currentURL.substring(currentURL.lastIndexOf('/') + 1);
-  const [formData, file, handleFileChange, handleInputChange, handelSubmit] =
-    EditDriverHook(id);
-  console.log('formData', formData);
+  const [
+    formData,
+    file,
+    handleFileChange,
+    handleInputChange,
+    handelSubmit,
+    isSubmitting,
+  ] = EditDriverHook(id);
+
   return (
     <div className="new">
       <Sidebar />
@@ -42,6 +48,7 @@ const EditDriver = () => {
                   name="file"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
+                  disabled={true}
                 />
               </div>
               <div className="fromInput">
@@ -50,6 +57,7 @@ const EditDriver = () => {
                   value={formData.fullName}
                   name="fullName"
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   type="text"
                   placeholder="Mostafa Mohamed"
                 />
@@ -60,6 +68,7 @@ const EditDriver = () => {
                   value={formData.email}
                   name="email"
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   type="mail"
                   placeholder="mm_taha@gmail.com"
                 />
@@ -70,13 +79,16 @@ const EditDriver = () => {
                   value={formData.phone}
                   name="phone"
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   type="text"
                   placeholder="+20 111 421 6518"
                   pattern="^01[0125][0-9]{8}$"
                 />
               </div>
 
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

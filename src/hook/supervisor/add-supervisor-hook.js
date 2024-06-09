@@ -65,6 +65,9 @@ const AddSupervisorHook = () => {
       if (res.status === 201) {
         notify('Supervisor Successfully Stored', 'success');
         dispatch(getAllSupervisor());
+        setTimeout(() => {
+          window.location.href = `/supervisors`;
+        }, 1000);
       } else {
         notify('There is a Problem on Add New Supervisor', 'error');
       }

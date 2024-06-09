@@ -2,19 +2,23 @@ import './style/newParent.scss';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import { useState } from 'react';
 
 import { ToastContainer } from 'react-toastify';
 import AddParentHook from '../../hook/parent/add-parent-hook';
 
 const NewParent = () => {
-  const [
-    file,
-    formData,
-    loading,
-    handleChange,
-    handleFileChange,
-    handleSubmit,
-  ] = AddParentHook();
+  const [file, formData, handleChange, handleFileChange, handleSubmit] =
+    AddParentHook();
+
+  const [submitting, setSubmitting] = useState(false);
+  // Set submitting state when handleSubmit is called
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await handleSubmit(e);
+    setSubmitting(false);
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -35,7 +39,7 @@ const NewParent = () => {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <div className="fromInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -45,7 +49,7 @@ const NewParent = () => {
                   id="file"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -57,7 +61,7 @@ const NewParent = () => {
                   placeholder="Mostafa Mohamed"
                   value={formData.fullName}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -69,7 +73,7 @@ const NewParent = () => {
                   placeholder="mm_taha@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -81,7 +85,7 @@ const NewParent = () => {
                   placeholder="+20 111 421 6518"
                   value={formData.phone}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -92,7 +96,7 @@ const NewParent = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -104,10 +108,12 @@ const NewParent = () => {
                   placeholder="Dayr Mawas St. 216 Bani Omran"
                   value={formData.address}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={submitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

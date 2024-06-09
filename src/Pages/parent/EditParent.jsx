@@ -12,10 +12,10 @@ const EditParent = () => {
   const [
     file,
     formData,
-    loading,
     handleChange,
     handleFileChange,
     handleSubmit,
+    isSubmitting,
   ] = EditParentHook(id);
 
   return (
@@ -60,7 +60,7 @@ const EditParent = () => {
                   placeholder="Mostafa Mohamed"
                   value={formData.fullName}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -72,7 +72,7 @@ const EditParent = () => {
                   placeholder="mm_taha@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -84,7 +84,7 @@ const EditParent = () => {
                   placeholder="+20 111 421 6518"
                   value={formData.phone}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -95,7 +95,7 @@ const EditParent = () => {
                   name="password"
                   value={formData.password || ''}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -107,10 +107,10 @@ const EditParent = () => {
                   placeholder="Dayr Mawas St. 216 Bani Omran"
                   value={formData.address}
                   onChange={handleChange}
-                  disabled={loading === false}
+                  disabled={isSubmitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </form>
           </div>
         </div>

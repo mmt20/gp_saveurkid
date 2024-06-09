@@ -10,8 +10,14 @@ const EditSupervisor = () => {
   const currentURL = window.location.href;
   const id = currentURL.substring(currentURL.lastIndexOf('/') + 1);
 
-  const [file, formData, handleChange, handleFileChange, handleSubmit] =
-    EditSupervisorHook(id);
+  const [
+    file,
+    formData,
+    handleChange,
+    handleFileChange,
+    handleSubmit,
+    isSubmitting,
+  ] = EditSupervisorHook(id);
   return (
     <div className="new">
       <Sidebar />
@@ -42,6 +48,7 @@ const EditSupervisor = () => {
                   id="file"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
+                  disabled={true}
                 />
               </div>
               <div className="fromInput">
@@ -53,6 +60,7 @@ const EditSupervisor = () => {
                   placeholder="Mostafa Mohamed"
                   value={formData.fullName}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -64,6 +72,7 @@ const EditSupervisor = () => {
                   placeholder="mm_taha@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -75,6 +84,7 @@ const EditSupervisor = () => {
                   placeholder="+20 111 421 6518"
                   value={formData.phone}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -85,6 +95,7 @@ const EditSupervisor = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -96,9 +107,12 @@ const EditSupervisor = () => {
                   placeholder="Dayr Mawas St. 216 Bani Omran"
                   value={formData.address}
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit">
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

@@ -33,7 +33,7 @@ const EditDriverHook = (id) => {
     }
   }, [OneDriver]);
   const [loading, setLoading] = useState(true);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // Handle file input change
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -51,9 +51,11 @@ const EditDriverHook = (id) => {
     const { fullName, email, phone } = formData;
     if (fullName === '' || email === '' || phone === '' || file === '') {
       notify('Please Insert All Data', 'warn');
+      setIsSubmitting(false);
       return;
     }
     setLoading(true);
+    setIsSubmitting(true);
     const formDataToSend = new FormData();
     formDataToSend.append('Full_Name', fullName);
     formDataToSend.append('Email', email);
@@ -61,6 +63,7 @@ const EditDriverHook = (id) => {
     formDataToSend.append('Image', file);
     await dispatch(updateDriver(id, formDataToSend));
     setLoading(false);
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
@@ -86,7 +89,14 @@ const EditDriverHook = (id) => {
     }
   }, [loading, res.status, dispatch, id]);
 
-  return [formData, file, handleFileChange, handleInputChange, handelSubmit];
+  return [
+    formData,
+    file,
+    handleFileChange,
+    handleInputChange,
+    handelSubmit,
+    isSubmitting,
+  ];
 };
 
 export default EditDriverHook;

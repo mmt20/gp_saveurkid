@@ -19,6 +19,7 @@ const EditStudent = () => {
     supervisors,
     loadingParent,
     loadingSupervisor,
+    isSubmitting,
   ] = EditStudentHook(id);
 
   return (
@@ -62,6 +63,7 @@ const EditStudent = () => {
                   value={formData.studentName}
                   placeholder="Mohamed"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -74,6 +76,7 @@ const EditStudent = () => {
                   value={formData.parent}
                   select
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 >
                   {loadingParent ? (
                     <MenuItem disabled>
@@ -99,6 +102,7 @@ const EditStudent = () => {
                   value={formData.supervisor}
                   select
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 >
                   {loadingSupervisor ? (
                     <MenuItem disabled>
@@ -122,6 +126,7 @@ const EditStudent = () => {
                   value={formData.grade}
                   placeholder="Five"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="fromInput">
@@ -132,9 +137,12 @@ const EditStudent = () => {
                   value={formData.stClass}
                   placeholder="A"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

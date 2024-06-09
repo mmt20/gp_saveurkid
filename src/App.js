@@ -30,39 +30,19 @@ import EditSupervisor from './Pages/supervisor/EditSupervisor';
 import EditDriver from './Pages/driver/EditDriver';
 import EditStudent from './Pages/student/EditStudent';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
-import { useDispatch } from 'react-redux';
-import { refreshAdminToken } from './redux/action/authAction';
-import { isTokenExpired, refreshToken } from './hook/auth/auth';
 
 if (process.env.REACT_APP_NODE_ENV === 'production') {
   disableReactDevTools();
 }
 function App() {
-  const dispatch = useDispatch();
   const { darkMode } = useContext(DarkModeContext);
   // eslint-disable-next-line
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem('token');
-  //   setIsLoggedIn(!!storedToken);
-  // }, []);
-
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    if (storedToken && isTokenExpired(storedToken)) {
-      refreshToken().then(() => setIsLoggedIn(true));
-    } else {
-      setIsLoggedIn(!!storedToken);
-    }
-  }, [dispatch]);
+    setIsLoggedIn(!!storedToken);
+  }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(refreshAdminToken());
-    }, 55 * 60 * 1000);
-
-    return () => clearInterval(interval);
-  }, [dispatch]);
   return (
     <div className={darkMode ? 'app dark' : 'app'}>
       <BrowserRouter>

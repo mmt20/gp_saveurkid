@@ -5,6 +5,7 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import { MenuItem, TextField, CircularProgress } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import AddStudentHook from '../../hook/student/add-student-hook';
+import { useState } from 'react';
 
 const NewStudent = () => {
   const [
@@ -18,7 +19,14 @@ const NewStudent = () => {
     loadingParent,
     loadingSupervisor,
   ] = AddStudentHook();
-
+  const [submitting, setSubmitting] = useState(false);
+  // Set submitting state when handleSubmit is called
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await handleSubmit(e);
+    setSubmitting(false);
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -39,7 +47,7 @@ const NewStudent = () => {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <div className="fromInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -49,6 +57,7 @@ const NewStudent = () => {
                   id="file"
                   onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: 'none' }}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -59,6 +68,7 @@ const NewStudent = () => {
                   value={formData.studentName}
                   placeholder="Mohamed"
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -71,6 +81,7 @@ const NewStudent = () => {
                   value={formData.parent}
                   select
                   onChange={handleChange}
+                  disabled={submitting}
                 >
                   {loadingParent ? (
                     <MenuItem disabled>
@@ -96,6 +107,7 @@ const NewStudent = () => {
                   value={formData.supervisor}
                   select
                   onChange={handleChange}
+                  disabled={submitting}
                 >
                   {loadingSupervisor ? (
                     <MenuItem disabled>
@@ -119,6 +131,7 @@ const NewStudent = () => {
                   value={formData.grade}
                   placeholder="Five"
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -129,9 +142,12 @@ const NewStudent = () => {
                   value={formData.stClass}
                   placeholder="A"
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

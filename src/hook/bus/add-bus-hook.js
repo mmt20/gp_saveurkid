@@ -69,6 +69,9 @@ const AddBusHook = () => {
       if (res.status === 201) {
         notify('Bus Successfully Added', 'success');
         dispatch(getAllBusesWithNames());
+        setTimeout(() => {
+          window.location.href = `/buses`;
+        }, 1000);
       } else {
         notify('There is a Problem Adding New Bus', 'error');
       }

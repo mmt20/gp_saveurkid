@@ -39,7 +39,7 @@ const EditSupervisorHook = (id) => {
     }
   }, [oneSupervisor]);
   const [loading, setLoading] = useState(true);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -61,9 +61,11 @@ const EditSupervisorHook = (id) => {
     const { fullName, email, phone, address } = formData;
     if (!fullName || !email || !phone || !address || !file) {
       notify('Please Insert All Data', 'warn');
+      setIsSubmitting(false);
       return;
     }
     setLoading(true);
+    setIsSubmitting(true);
     const formDataToSend = new FormData();
     formDataToSend.append('Image', file);
     formDataToSend.append('Full_Name', formData.fullName);
@@ -75,6 +77,7 @@ const EditSupervisorHook = (id) => {
 
     await dispatch(updateSupervisor(id, formDataToSend));
     setLoading(false);
+    setIsSubmitting(false);
   };
   useEffect(() => {
     if (!loading) {
@@ -89,19 +92,26 @@ const EditSupervisorHook = (id) => {
       setLoading(true);
       if (res.status === 201) {
         notify('Supervisor Data Modified successfully', 'success');
+        dispatch(getAllSupervisor());
         if (id) {
           setTimeout(() => {
             window.location.href = `/supervisors/${id}`;
           }, 1000);
         }
-        dispatch(getAllSupervisor());
       } else {
         notify('There is a Problem on Modify Supervisor', 'error');
       }
     }
   }, [loading, res, dispatch, id]);
 
-  return [file, formData, handleChange, handleFileChange, handleSubmit];
+  return [
+    file,
+    formData,
+    handleChange,
+    handleFileChange,
+    handleSubmit,
+    isSubmitting,
+  ];
 };
 
 export default EditSupervisorHook;

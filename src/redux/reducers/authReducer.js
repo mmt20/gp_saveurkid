@@ -1,9 +1,8 @@
-import { LOGIN_ADMIN, LOGOUT_ADMIN, REFRESH_TOKEN } from '../type';
+import { LOGIN_ADMIN, LOGOUT_ADMIN } from '../type';
 
 const inital = {
   loginAdmin: [],
   logoutAdmin: [],
-  refreshToken: [],
   loading: true,
 };
 const authReducer = (state = inital, action) => {
@@ -18,12 +17,7 @@ const authReducer = (state = inital, action) => {
         ...state,
         logoutAdmin: action.payload,
       };
-    case REFRESH_TOKEN:
-      return {
-        ...state,
-        refreshToken: action.payload,
-        loading: false,
-      };
+
     default:
       return state;
   }

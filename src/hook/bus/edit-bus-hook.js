@@ -12,7 +12,6 @@ const EditBusHook = (id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(id);
     async function fetchData() {
       try {
         await dispatch(getOneBusWithNames(id));
@@ -35,6 +34,7 @@ const EditBusHook = (id) => {
   const loadingSupervisors = useSelector(
     (state) => state.allSupervisors.loading
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     busNumber: '',
     busLine: '',
@@ -77,10 +77,12 @@ const EditBusHook = (id) => {
     const { busNumber, busLine, driver, supervisor } = formData;
     if (!busNumber || !busLine || !driver || !supervisor) {
       notify('Please Insert All Data', 'warn');
+      setIsSubmitting(false);
       return;
     }
 
     setLoading(true);
+    setIsSubmitting(true);
     const formDataToSend = {
       Bus_License: busNumber,
       Bus_Line_Name: busLine,
@@ -88,16 +90,11 @@ const EditBusHook = (id) => {
       Bus_Supervisor_ID: supervisor,
     };
     await dispatch(updateBus(id, formDataToSend));
-    setFormData({
-      busNumber: '',
-      busLine: '',
-      driver: '',
-      supervisor: '',
-    });
     setLoading(false);
+    setIsSubmitting(false);
   };
   const res = useSelector((state) => state.allBuses.updateBus.data);
-
+  console.log(res);
   useEffect(() => {
     if (!loading) {
       setFormData({
@@ -109,12 +106,10 @@ const EditBusHook = (id) => {
       setLoading(true);
       if (res.status === 201) {
         notify('Bus Data Modified successfully', 'success');
-        if (id) {
-          setTimeout(() => {
-            window.location.href = `/buses`;
-          }, 1000);
-        }
         dispatch(getAllBusesWithNames());
+        setTimeout(() => {
+          window.location.href = `/buses`;
+        }, 1000);
       } else {
         notify('There is a Problem on Modify Bus', 'error');
       }
@@ -128,6 +123,7 @@ const EditBusHook = (id) => {
     loadingSupervisors,
     handleInputChange,
     handleSubmit,
+    isSubmitting,
   ];
 };
 

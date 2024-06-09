@@ -5,10 +5,20 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 
 import { ToastContainer } from 'react-toastify';
 import AddSupervisorHook from '../../hook/supervisor/add-supervisor-hook';
+import { useState } from 'react';
 
 const NewSuprvisor = () => {
   const [file, formData, handleChange, handleFileChange, handleSubmit] =
     AddSupervisorHook();
+
+  const [submitting, setSubmitting] = useState(false);
+  // Set submitting state when handleSubmit is called
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await handleSubmit(e);
+    setSubmitting(false);
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -29,7 +39,7 @@ const NewSuprvisor = () => {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <div className="fromInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -39,6 +49,7 @@ const NewSuprvisor = () => {
                   id="file"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -50,6 +61,7 @@ const NewSuprvisor = () => {
                   placeholder="Mostafa Mohamed"
                   value={formData.fullName}
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -61,6 +73,7 @@ const NewSuprvisor = () => {
                   placeholder="mm_taha@gmail.com"
                   value={formData.email}
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -72,6 +85,7 @@ const NewSuprvisor = () => {
                   placeholder="+20 111 421 6518"
                   value={formData.phone}
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -82,6 +96,7 @@ const NewSuprvisor = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -93,9 +108,12 @@ const NewSuprvisor = () => {
                   placeholder="Dayr Mawas St. 216 Bani Omran"
                   value={formData.address}
                   onChange={handleChange}
+                  disabled={submitting}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

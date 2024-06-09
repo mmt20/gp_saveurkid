@@ -36,7 +36,7 @@ const EditParentHook = (id) => {
     }
   }, [oneParent]);
   const [loading, setLoading] = useState(true);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -55,9 +55,11 @@ const EditParentHook = (id) => {
     const { fullName, email, phone, address } = formData;
     if (!fullName || !email || !phone || !address || !file) {
       notify('Please Insert All Data', 'warn');
+      setIsSubmitting(false);
       return;
     }
     setLoading(true);
+    setIsSubmitting(true);
     const formDataToSend = new FormData();
     formDataToSend.append('Image', file);
     formDataToSend.append('Full_Name', formData.fullName);
@@ -67,6 +69,7 @@ const EditParentHook = (id) => {
     formDataToSend.append('address', formData.address);
     await dispatch(updateParent(id, formDataToSend));
     setLoading(false);
+    setIsSubmitting(false);
   };
   useEffect(() => {
     if (!loading) {
@@ -97,10 +100,10 @@ const EditParentHook = (id) => {
   return [
     file,
     formData,
-    loading,
     handleChange,
     handleFileChange,
     handleSubmit,
+    isSubmitting,
   ];
 };
 

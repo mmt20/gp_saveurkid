@@ -17,6 +17,7 @@ const EditBus = () => {
     loadingSupervisors,
     handleInputChange,
     handleSubmit,
+    isSubmitting,
   ] = EditBusHook(id);
   return (
     <div className="new">
@@ -36,6 +37,7 @@ const EditBus = () => {
                   name="busNumber"
                   value={formData.busNumber || ''}
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   placeholder="س ج ط 2594"
                 />
               </div>
@@ -46,6 +48,7 @@ const EditBus = () => {
                   name="busLine"
                   value={formData.busLine || ''}
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                   placeholder="Dalga"
                 />
               </div>
@@ -59,6 +62,7 @@ const EditBus = () => {
                   name="driver"
                   select
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                 >
                   {loadingDrivers ? (
                     <MenuItem disabled>
@@ -84,6 +88,7 @@ const EditBus = () => {
                   name="supervisor"
                   select
                   onChange={handleInputChange}
+                  disabled={isSubmitting}
                 >
                   {loadingSupervisors ? (
                     <MenuItem disabled>
@@ -98,7 +103,9 @@ const EditBus = () => {
                   )}
                 </TextField>
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

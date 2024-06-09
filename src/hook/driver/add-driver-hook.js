@@ -50,6 +50,9 @@ const AddDriverHook = () => {
       if (res.status === 201) {
         dispatch(getAllDriver());
         notify('Driver Successfully Stored', 'success');
+        setTimeout(() => {
+          window.location.href = `/drivers`;
+        }, 1000);
       } else {
         notify('There is a Problem on Add New Driver', 'error');
       }

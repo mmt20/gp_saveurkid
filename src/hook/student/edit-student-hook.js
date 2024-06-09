@@ -48,7 +48,7 @@ const EditStudentHook = (id) => {
   const loadingSupervisor = useSelector(
     (state) => state.allSupervisors.loading
   );
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -60,9 +60,11 @@ const EditStudentHook = (id) => {
     const { studentName, grade, stClass, parent, supervisor } = formData;
     if (!studentName || !grade || !stClass || !parent || !supervisor || !file) {
       notify('Please Insert All Data', 'warn');
+      setIsSubmitting(false);
       return;
     }
     setLoading(true);
+    setIsSubmitting(true);
     const formDataToSend = new FormData();
     formDataToSend.append('Image', file);
     formDataToSend.append('FullName', studentName);
@@ -72,6 +74,7 @@ const EditStudentHook = (id) => {
     formDataToSend.append('grade', grade);
     await dispatch(updateStudent(id, formDataToSend));
     setLoading(false);
+    setIsSubmitting(false);
   };
   const res = useSelector((state) => state.allStudents.updateStudents);
   console.log('res', res);
@@ -89,11 +92,16 @@ const EditStudentHook = (id) => {
       if (res.status === 201) {
         dispatch(getAllStudentWithParent());
         notify('Student Data Modified successfully', 'success');
+        if (id) {
+          setTimeout(() => {
+            window.location.href = `/students/${id}`;
+          }, 1000);
+        }
       } else {
         notify('There is a Problem on Modify Student', 'error');
       }
     }
-  }, [loading, res.status, dispatch]);
+  }, [loading, res.status, dispatch, id]);
   return [
     file,
     formData,
@@ -104,6 +112,7 @@ const EditStudentHook = (id) => {
     supervisors,
     loadingParent,
     loadingSupervisor,
+    isSubmitting,
   ];
 };
 

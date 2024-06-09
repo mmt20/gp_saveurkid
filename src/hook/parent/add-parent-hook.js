@@ -13,7 +13,6 @@ const AddParentHook = () => {
     address: '',
   });
   const [loading, setLoading] = useState(true);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -59,20 +58,17 @@ const AddParentHook = () => {
       if (res.status === 201) {
         dispatch(getAllParent());
         notify('Parent Successfully Stored', 'success');
+
+        setTimeout(() => {
+          window.location.href = `/parents`;
+        }, 1000);
       } else {
         notify('There is a Problem on Add New Parent', 'error');
       }
     }
   }, [loading, res.status, dispatch]);
 
-  return [
-    file,
-    formData,
-    loading,
-    handleChange,
-    handleFileChange,
-    handleSubmit,
-  ];
+  return [file, formData, handleChange, handleFileChange, handleSubmit];
 };
 
 export default AddParentHook;

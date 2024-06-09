@@ -2,7 +2,7 @@ import {
   useInsertData,
   useInsertDataWithImage,
 } from '../../hooks/useInserData';
-import { LOGIN_ADMIN, LOGOUT_ADMIN, REFRESH_TOKEN } from '../type';
+import { LOGIN_ADMIN, LOGOUT_ADMIN } from '../type';
 
 //login  user
 export const loginAdmin = (data) => async (dispatch) => {
@@ -33,23 +33,6 @@ export const logoutAdmin = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: LOGOUT_ADMIN,
-      payload: e.response,
-    });
-  }
-};
-
-// Admin Refresh Token
-export const refreshAdminToken = () => async (dispatch) => {
-  try {
-    const response = await useInsertData(`/api/auth/refresht`);
-    dispatch({
-      type: REFRESH_TOKEN,
-      payload: response,
-      loading: true,
-    });
-  } catch (e) {
-    dispatch({
-      type: REFRESH_TOKEN,
       payload: e.response,
     });
   }

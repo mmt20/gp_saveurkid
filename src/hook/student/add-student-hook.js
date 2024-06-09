@@ -69,7 +69,11 @@ const AddStudentHook = () => {
       setLoading(true);
       if (res.status === 201) {
         dispatch(getAllStudentWithParent());
+
         notify('Student Successfully Stored', 'success');
+        setTimeout(() => {
+          window.location.href = `/students`;
+        }, 1000);
       } else {
         notify('There is a Problem on Add New Student', 'error');
       }

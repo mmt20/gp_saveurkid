@@ -4,10 +4,19 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { ToastContainer } from 'react-toastify';
 import AddDriverHook from './../../hook/driver/add-driver-hook';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import { useState } from 'react';
 
 const NewDriver = () => {
   const [formData, file, handleFileChange, handleInputChange, handelSubmit] =
     AddDriverHook();
+  const [submitting, setSubmitting] = useState(false);
+  // Set submitting state when handleSubmit is called
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await handelSubmit(e);
+    setSubmitting(false);
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -28,7 +37,7 @@ const NewDriver = () => {
             />
           </div>
           <div className="right">
-            <form onSubmit={handelSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <div className="fromInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -39,6 +48,7 @@ const NewDriver = () => {
                   name="file"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -49,6 +59,7 @@ const NewDriver = () => {
                   onChange={handleInputChange}
                   type="text"
                   placeholder="Mostafa Mohamed"
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -59,6 +70,7 @@ const NewDriver = () => {
                   onChange={handleInputChange}
                   type="mail"
                   placeholder="mm_taha@gmail.com"
+                  disabled={submitting}
                 />
               </div>
               <div className="fromInput">
@@ -70,10 +82,13 @@ const NewDriver = () => {
                   type="text"
                   placeholder="+20 111 421 6518"
                   pattern="^01[0125][0-9]{8}$"
+                  disabled={submitting}
                 />
               </div>
 
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>

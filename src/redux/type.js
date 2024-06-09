@@ -36,7 +36,6 @@ export const GET_ALL_STUDENT_WITH_PARENT = 'GET_ALL_STUDENT_WITH_PARENT';
 //admin login
 export const LOGIN_ADMIN = 'LOGIN_ADMIN';
 export const LOGOUT_ADMIN = 'LOGOUT_ADMIN';
-export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 //error
 export const GET_ERROR = 'GET_ERROR';

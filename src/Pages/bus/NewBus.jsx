@@ -4,6 +4,7 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { CircularProgress, MenuItem, TextField } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import AddBusHook from '../../hook/bus/add-bus-hook';
+import { useState } from 'react';
 
 const NewBus = () => {
   const [
@@ -15,6 +16,14 @@ const NewBus = () => {
     handleInputChange,
     handleSubmit,
   ] = AddBusHook();
+  const [submitting, setSubmitting] = useState(false);
+  // Set submitting state when handleSubmit is called
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    await handleSubmit(e);
+    setSubmitting(false);
+  };
   return (
     <div className="new">
       <Sidebar />
@@ -25,7 +34,7 @@ const NewBus = () => {
         </div>
         <div className="bottom">
           <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
               <div className="fromInput">
                 <label>Bus Number</label>
                 <input
@@ -33,6 +42,7 @@ const NewBus = () => {
                   name="busNumber"
                   value={formData.busNumber}
                   onChange={handleInputChange}
+                  disabled={submitting}
                   placeholder="س ج ط 2594"
                 />
               </div>
@@ -43,6 +53,7 @@ const NewBus = () => {
                   name="busLine"
                   value={formData.busLine}
                   onChange={handleInputChange}
+                  disabled={submitting}
                   placeholder="Dalga"
                 />
               </div>
@@ -56,6 +67,7 @@ const NewBus = () => {
                   name="driver"
                   select
                   onChange={handleInputChange}
+                  disabled={submitting}
                 >
                   {loadingDrivers ? (
                     <MenuItem disabled>
@@ -81,6 +93,7 @@ const NewBus = () => {
                   name="supervisor"
                   select
                   onChange={handleInputChange}
+                  disabled={submitting}
                 >
                   {loadingSupervisors ? (
                     <MenuItem disabled>
@@ -95,7 +108,9 @@ const NewBus = () => {
                   )}
                 </TextField>
               </div>
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>
