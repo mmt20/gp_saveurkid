@@ -110,7 +110,9 @@ const EditParent = () => {
                   disabled={isSubmitting}
                 />
               </div>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           </div>
         </div>
