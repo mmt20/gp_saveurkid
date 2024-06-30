@@ -1,8 +1,8 @@
 <br/>
 <div align="center">
-<a href="https://github.com/ShaanCoding/ReadME-Generator">
+
 <img src="https://i.ibb.co/YBrQMfD/GP-LOGO.png" alt="Logo" width="80" height="80">
-</a>
+
 <h3 align="center">Saveurkid</h3>
 <p align="center">
 Ensuring Safe School Transportation
