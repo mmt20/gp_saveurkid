@@ -64,6 +64,6 @@ Distributed under the MIT License. See [MIT License](https://opensource.org/lice
 
 ## Contact
 
-Mostafa Mohamed - [@MMTAHA22r](https://x.com/MMTAHA22) - mmt202002@gmail.com
+Mostafa Mohamed - [@MMTAHA22](https://x.com/MMTAHA22) - mmt202002@gmail.com
 
 Project Link: [https://github.com/mmt20/gp_saveurkid](https://github.com/mmt20/gp_saveurkid)
